@@ -3,7 +3,7 @@ version: "3.8"
 services:
   starred:
     build: .
-    image: ghcr.io/${GH_USERNAME:-yourusername}/starred:latest
+    image: ghcr.io/${GH_USERNAME:-amirhmoradi}/starred:latest
     environment:
       - GH_TOKEN=${GH_TOKEN}
       - GH_USERNAME=${GH_USERNAME}

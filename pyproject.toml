@@ -68,11 +68,11 @@ dev = [
 starred = "src.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/starred"
-Repository = "https://github.com/yourusername/starred"
-Documentation = "https://github.com/yourusername/starred#readme"
-Issues = "https://github.com/yourusername/starred/issues"
-Changelog = "https://github.com/yourusername/starred/releases"
+Homepage = "https://github.com/amirhmoradi/starred"
+Repository = "https://github.com/amirhmoradi/starred"
+Documentation = "https://github.com/amirhmoradi/starred#readme"
+Issues = "https://github.com/amirhmoradi/starred/issues"
+Changelog = "https://github.com/amirhmoradi/starred/releases"
 
 [tool.setuptools.packages.find]
 where = ["."]

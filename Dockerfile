@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-LABEL org.opencontainers.image.source="https://github.com/yourusername/starred"
+LABEL org.opencontainers.image.source="https://github.com/amirhmoradi/starred"
 LABEL org.opencontainers.image.description="AI-powered GitHub Stars Organizer"
 LABEL org.opencontainers.image.licenses="MIT"
 

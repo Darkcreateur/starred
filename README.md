@@ -4,7 +4,7 @@
 
 Automatically categorize your GitHub starred repositories using AI (Claude, GPT, or Gemini), export to Markdown, and optionally sync with GitHub star lists.
 
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/yourusername/starred/update-starred.yml?label=auto-update)](https://github.com/yourusername/starred/actions)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/amirhmoradi/starred/update-starred.yml?label=auto-update)](https://github.com/amirhmoradi/starred/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -41,7 +41,7 @@ Automatically categorize your GitHub starred repositories using AI (Claude, GPT,
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/starred.git
+git clone https://github.com/amirhmoradi/starred.git
 cd starred
 
 # Install with your preferred LLM provider
@@ -236,7 +236,7 @@ Triggered when `STARRED_REPOS.md` changes:
 
 ```bash
 # Clone and install dev dependencies
-git clone https://github.com/yourusername/starred.git
+git clone https://github.com/amirhmoradi/starred.git
 cd starred
 pip install -e ".[dev,all]"
 
@@ -288,5 +288,5 @@ Built with ❤️ using Claude, GPT, and Gemini.
 ---
 
 <p align="center">
-  <a href="https://github.com/yourusername/starred/stargazers">⭐ Star this repo</a> if you find it useful!
+  <a href="https://github.com/amirhmoradi/starred/stargazers">⭐ Star this repo</a> if you find it useful!
 </p>

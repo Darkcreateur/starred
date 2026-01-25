@@ -15,7 +15,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 
 ```bash
 # Fork and clone the repository
-git clone https://github.com/yourusername/starred.git
+git clone https://github.com/amirhmoradi/starred.git
 cd starred
 
 # Create a virtual environment
