@@ -57,7 +57,8 @@ Define your own categories, preferences, and display options.
 
 1. **Fork or use this template**
    
-   [![Use Template](https://img.shields.io/badge/Use%20This-Template-blue?style=for-the-badge)](https://github.com/amirhmoradi/starred/generate)
+   [![Fork](https://img.shields.io/badge/Fork-Repository-blue?style=for-the-badge&logo=github)](https://github.com/amirhmoradi/starred/fork)
+   [![Use Template](https://img.shields.io/badge/Use-Template-green?style=for-the-badge&logo=github)](https://github.com/new?template_name=starred&template_owner=amirhmoradi)
 
 2. **Add secrets** in Settings → Secrets → Actions:
    
