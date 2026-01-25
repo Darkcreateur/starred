@@ -78,12 +78,11 @@ class MarkdownExporter:
             desc = repo.description[:self.max_description_length]
             if len(repo.description) > self.max_description_length:
                 desc += "..."
-            parts.append(f"- {desc}")
+            if not self.compact_mode:
+                parts.append(f"- {desc}")
         
-        if self.compact_mode:
-            return " ".join(parts)
-        else:
-            return f"- {' '.join(parts)}"
+        # Always include "- " prefix for proper markdown list rendering
+        return f"- {' '.join(parts)}"
     
     def _format_category(self, category: Category) -> list[str]:
         """Format a category and its repos."""
@@ -360,11 +359,16 @@ def update_readme(
         )
         return False
     
-    # Replace content between tags
-    replacement = f"{START_TAG}\n\n{content}\n\n{END_TAG}"
+    # Replace content between tags using string methods (avoids regex escaping issues)
     start_idx = readme_content.find(START_TAG)
     end_idx = readme_content.find(END_TAG) + len(END_TAG)
-    new_content = readme_content[:start_idx] + replacement + readme_content[end_idx:]    
+    
+    if start_idx == -1 or end_idx == -1:
+        logger.error("Could not find placeholder tags positions")
+        return False
+    
+    replacement = f"{START_TAG}\n\n{content}\n\n{END_TAG}"
+    new_content = readme_content[:start_idx] + replacement + readme_content[end_idx:]
     
     # Write updated README
     readme_path.write_text(new_content, encoding="utf-8")
