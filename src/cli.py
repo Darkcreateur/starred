@@ -172,6 +172,7 @@ def cmd_update_readme(args):
         max_categories=args.max_categories,
         include_toc=args.include_toc,
         include_description=args.include_description,
+        starred_repo_url=args.starred_repo_url,
         create_if_missing=args.create,
     )
     
@@ -331,6 +332,7 @@ Environment Variables:
     readme_parser.add_argument("--max-categories", type=int, default=10, help="Max categories")
     readme_parser.add_argument("--include-toc", action="store_true", help="Include table of contents")
     readme_parser.add_argument("--include-description", action="store_true", help="Include repo descriptions")
+    readme_parser.add_argument("--starred-repo-url", default="https://github.com/yourusername/starred", help="URL to your starred repo (for promotion)")
     readme_parser.add_argument("--create", action="store_true", help="Create README if missing")
     readme_parser.add_argument("--create-template", action="store_true", help="Create template README")
     
