@@ -1,0 +1,78 @@
+[
+  {
+    "name": "🤖 AI & Machine Learning",
+    "description": "Machine learning frameworks, deep learning, NLP, computer vision, AI tools and utilities"
+  },
+  {
+    "name": "🌐 Web Development",
+    "description": "Frontend frameworks, backend tools, fullstack solutions, web APIs"
+  },
+  {
+    "name": "⚙️ DevOps & Infrastructure",
+    "description": "CI/CD, containers, Kubernetes, cloud infrastructure, IaC"
+  },
+  {
+    "name": "🔧 CLI Tools",
+    "description": "Command line utilities, terminal tools, shell enhancements"
+  },
+  {
+    "name": "🔒 Security & Privacy",
+    "description": "Security tools, encryption, privacy-focused software, auth solutions"
+  },
+  {
+    "name": "📊 Data Engineering",
+    "description": "Data pipelines, ETL tools, analytics, data processing"
+  },
+  {
+    "name": "📱 Mobile Development",
+    "description": "iOS, Android, React Native, Flutter, cross-platform mobile"
+  },
+  {
+    "name": "🖥️ Desktop Applications",
+    "description": "Desktop apps, Electron, GUI frameworks, system utilities"
+  },
+  {
+    "name": "📚 Documentation & Learning",
+    "description": "Learning resources, tutorials, documentation tools, awesome lists"
+  },
+  {
+    "name": "🔌 APIs & SDKs",
+    "description": "API clients, SDKs, integrations, API tools"
+  },
+  {
+    "name": "🧪 Testing & QA",
+    "description": "Testing frameworks, QA tools, mocking, test utilities"
+  },
+  {
+    "name": "🎨 Design & UI",
+    "description": "UI components, design systems, CSS frameworks, icons"
+  },
+  {
+    "name": "💾 Databases",
+    "description": "Database systems, ORMs, data storage, caching"
+  },
+  {
+    "name": "🏠 Self-Hosted",
+    "description": "Self-hosted alternatives, privacy-focused services, homelab tools"
+  },
+  {
+    "name": "🚀 Starter Templates",
+    "description": "Boilerplates, starter kits, project templates, scaffolding"
+  },
+  {
+    "name": "🎮 Gaming & Graphics",
+    "description": "Game engines, graphics libraries, creative coding"
+  },
+  {
+    "name": "💰 Finance & Crypto",
+    "description": "Financial tools, cryptocurrency, trading, fintech"
+  },
+  {
+    "name": "⚡ Productivity",
+    "description": "Productivity tools, automation, time management"
+  },
+  {
+    "name": "📦 Miscellaneous",
+    "description": "Other useful repositories that don't fit elsewhere"
+  }
+]

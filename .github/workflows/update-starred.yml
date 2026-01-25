@@ -1,0 +1,161 @@
+name: Update Starred Repos
+
+on:
+  # Run daily at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Run on push to main (for testing)
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - '.github/workflows/update-starred.yml'
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      preferences:
+        description: 'Categorization preferences (optional)'
+        required: false
+        type: string
+      provider:
+        description: 'LLM Provider'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - anthropic
+          - openai
+          - gemini
+      force_recategorize:
+        description: 'Force full recategorization'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  update-starred:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install -e ".[all]"
+      
+      - name: Restore cached data
+        uses: actions/cache@v4
+        with:
+          path: data/
+          key: starred-data-${{ github.repository_owner }}-${{ hashFiles('data/*.json') }}
+          restore-keys: |
+            starred-data-${{ github.repository_owner }}-
+      
+      - name: Fetch starred repositories
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+          GH_USERNAME: ${{ github.repository_owner }}
+        run: |
+          starred fetch --with-readme --output data/starred_cache.json
+      
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if [ -f "data/starred_cache.json" ] && [ -f "data/previous_cache.json" ]; then
+            NEW_COUNT=$(jq length data/starred_cache.json)
+            OLD_COUNT=$(jq length data/previous_cache.json)
+            
+            if [ "$NEW_COUNT" != "$OLD_COUNT" ] || [ "${{ inputs.force_recategorize }}" == "true" ]; then
+              echo "changes=true" >> $GITHUB_OUTPUT
+              echo "Found changes: $OLD_COUNT -> $NEW_COUNT repos"
+            else
+              echo "changes=false" >> $GITHUB_OUTPUT
+              echo "No changes detected"
+            fi
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "No previous cache, will categorize"
+          fi
+      
+      - name: Categorize repositories
+        if: steps.check-changes.outputs.changes == 'true' || inputs.force_recategorize
+        env:
+          GH_USERNAME: ${{ github.repository_owner }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          PROVIDER_ARG=""
+          if [ "${{ inputs.provider }}" != "auto" ] && [ -n "${{ inputs.provider }}" ]; then
+            PROVIDER_ARG="--provider ${{ inputs.provider }}"
+          fi
+          
+          PREFS="${{ inputs.preferences }}"
+          if [ -z "$PREFS" ]; then
+            # Default preferences - customize for your use case
+            PREFS="Organize repositories for a developer interested in DevOps, self-hosting, automation, web development, and AI/ML tools."
+          fi
+          
+          starred categorize \
+            --input data/starred_cache.json \
+            --output-dir . \
+            --preferences "$PREFS" \
+            $PROVIDER_ARG
+          
+          # Save current cache as previous for next run
+          cp data/starred_cache.json data/previous_cache.json
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add STARRED_REPOS.md starred_data.json data/
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update starred repositories [skip ci]"
+            git push
+          fi
+      
+      - name: Create summary
+        run: |
+          echo "## 📊 Starred Repos Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "starred_data.json" ]; then
+            TOTAL=$(jq '.total_repos' starred_data.json)
+            CATS=$(jq '.category_count' starred_data.json)
+            PROVIDER=$(jq -r '.llm_provider' starred_data.json)
+            MODEL=$(jq -r '.llm_model' starred_data.json)
+            
+            echo "**Total repositories:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+            echo "**Categories:** $CATS" >> $GITHUB_STEP_SUMMARY
+            echo "**LLM:** $PROVIDER ($MODEL)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Categories" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            jq -r '.categories | to_entries | sort_by(-.value.count) | .[] | "- **\(.key)**: \(.value.count) repos"' starred_data.json >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No categorization data found." >> $GITHUB_STEP_SUMMARY
+          fi

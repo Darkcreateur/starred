@@ -1,0 +1,8 @@
+# Data Directory
+
+This directory stores:
+
+- `starred_cache.json` - Cached starred repos from GitHub API
+- `previous_cache.json` - Previous cache for detecting changes
+
+These files are gitignored but the directory is kept.

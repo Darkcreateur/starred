@@ -1,0 +1,103 @@
+name: Update Profile README
+
+on:
+  # Trigger when STARRED_REPOS.md changes
+  push:
+    branches: [main]
+    paths:
+      - 'STARRED_REPOS.md'
+      - 'starred_data.json'
+  
+  # Or trigger manually
+  workflow_dispatch:
+    inputs:
+      profile_repo:
+        description: 'Profile repo (username/username or org/.github)'
+        required: false
+        type: string
+      max_repos:
+        description: 'Max repos to show in README'
+        required: false
+        type: number
+        default: 50
+      max_categories:
+        description: 'Max categories to show'
+        required: false
+        type: number
+        default: 10
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout starred repo
+        uses: actions/checkout@v4
+        with:
+          path: starred
+      
+      - name: Determine profile repo
+        id: profile
+        run: |
+          PROFILE_REPO="${{ inputs.profile_repo }}"
+          
+          if [ -z "$PROFILE_REPO" ]; then
+            # Default: user's profile repo (username/username)
+            PROFILE_REPO="${{ github.repository_owner }}/${{ github.repository_owner }}"
+          fi
+          
+          echo "repo=$PROFILE_REPO" >> $GITHUB_OUTPUT
+          echo "Will update README in: $PROFILE_REPO"
+      
+      - name: Checkout profile repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.profile.outputs.repo }}
+          token: ${{ secrets.PROFILE_REPO_TOKEN || secrets.GH_PAT }}
+          path: profile
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install starred
+        run: |
+          cd starred
+          pip install -e .
+      
+      - name: Update profile README
+        run: |
+          cd starred
+          
+          # Check if profile README exists and has placeholders
+          PROFILE_README="../profile/README.md"
+          
+          if [ ! -f "$PROFILE_README" ]; then
+            echo "Creating profile README with placeholders..."
+            starred update-readme --readme "$PROFILE_README" --create-template
+          fi
+          
+          # Update the README
+          starred update-readme \
+            --readme "$PROFILE_README" \
+            --data starred_data.json \
+            --max-repos ${{ inputs.max_repos || 50 }} \
+            --max-categories ${{ inputs.max_categories || 10 }}
+      
+      - name: Commit and push to profile repo
+        run: |
+          cd profile
+          
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add README.md
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update starred repos section"
+            git push
+            echo "✅ Updated profile README"
+          fi

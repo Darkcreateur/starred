@@ -1,0 +1,17 @@
+# Core dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+python-dotenv>=1.0.0
+
+# LLM Providers (install the one(s) you need)
+# Uncomment or add based on your preference:
+
+# Anthropic Claude
+anthropic>=0.40.0
+
+# OpenAI GPT
+# openai>=1.0.0
+
+# Google Gemini
+# google-generativeai>=0.3.0

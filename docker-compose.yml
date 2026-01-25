@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  starred:
+    build: .
+    image: ghcr.io/${GH_USERNAME:-yourusername}/starred:latest
+    environment:
+      - GH_TOKEN=${GH_TOKEN}
+      - GH_USERNAME=${GH_USERNAME}
+      - GH_COOKIE=${GH_COOKIE:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - ./data:/app/data
+      - ./output:/output
+      # Mount for output files
+      - ./STARRED_REPOS.md:/app/STARRED_REPOS.md
+      - ./starred_data.json:/app/starred_data.json
+
+  # One-shot: Fetch and categorize
+  update:
+    extends: starred
+    command: >
+      sh -c "
+        starred fetch --output /app/data/starred_cache.json &&
+        starred categorize 
+          --input /app/data/starred_cache.json 
+          --output-dir /app
+          --preferences '${CATEGORIZATION_PREFERENCES:-Organize for a developer interested in DevOps, self-hosting, and automation.}'
+      "
+
+  # One-shot: Sync to GitHub lists
+  sync:
+    extends: starred
+    command: >
+      starred sync 
+        --data /app/starred_data.json
+        ${SYNC_DRY_RUN:+--dry-run}
+    profiles:
+      - sync
+
+# Volumes for persistence
+volumes:
+  data:
